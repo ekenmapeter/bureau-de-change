@@ -5,10 +5,13 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\RateController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\WalletController;
+use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Cashier\DashboardController as CashierDashboardController;
 use App\Http\Controllers\Cashier\CashDepositController as CashierCashDepositController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
+use App\Http\Controllers\Manager\RateController as ManagerRateController;
+use App\Http\Controllers\Manager\CurrencyController as ManagerCurrencyController;
 use App\Http\Controllers\OpeningBalanceController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -22,12 +25,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Admin Routes
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/wallets', [WalletController::class, 'index'])->name('wallets.index');
     Route::get('/wallets/download', [WalletController::class, 'downloadHistory'])->name('wallets.download-history');
     Route::get('/rates', [RateController::class, 'index'])->name('rates.index');
     Route::post('/rates', [RateController::class, 'update'])->name('rates.update');
+    Route::resource('currencies', CurrencyController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/clear-logs', [SettingsController::class, 'clearLogs'])->name('settings.clear-logs');
     Route::resource('users', UserController::class);
@@ -36,17 +40,18 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 // Manager Routes
-Route::middleware(['auth'])->prefix('manager')->name('manager.')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':manager'])->prefix('manager')->name('manager.')->group(function () {
     Route::get('/dashboard', [ManagerDashboardController::class, 'index'])->name('dashboard');
     Route::get('/wallets', [WalletController::class, 'index'])->name('wallets.index');
-    Route::get('/rates', [RateController::class, 'index'])->name('rates.index');
-    Route::post('/rates', [RateController::class, 'update'])->name('rates.update');
+    Route::get('/rates', [ManagerRateController::class, 'index'])->name('rates.index');
+    Route::post('/rates', [ManagerRateController::class, 'update'])->name('rates.update');
+    Route::resource('currencies', ManagerCurrencyController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
     Route::resource('users', UserController::class)->only(['index', 'create', 'store', 'edit', 'update']);
     Route::resource('transactions', TransactionController::class)->middleware(\App\Http\Middleware\CheckOpeningBalance::class);
 });
 
 // Cashier Routes
-Route::middleware(['auth'])->prefix('cashier')->name('cashier.')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':cashier'])->prefix('cashier')->name('cashier.')->group(function () {
     Route::get('/dashboard', [CashierDashboardController::class, 'index'])->name('dashboard');
     Route::get('/wallets', [WalletController::class, 'index'])->name('wallets.index');
     Route::resource('transactions', TransactionController::class)->middleware(\App\Http\Middleware\CheckOpeningBalance::class);

@@ -13,7 +13,7 @@
     @endif
 
     <div class="mb-6 flex justify-end">
-        <a href="{{ route('admin.currencies.create') }}" class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+        <a href="{{ route('manager.currencies.create') }}" class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
             Add New Currency
         </a>
     </div>
@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="md:col-span-1 flex justify-end">
-                                <form action="{{ route('admin.currencies.destroy', $currency->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this currency? This action cannot be undone.');">
+                                <form action="{{ route('manager.currencies.destroy', $currency->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this currency? This action cannot be undone.');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-800">

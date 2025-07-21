@@ -10,6 +10,11 @@
         <p class="text-gray-600">Welcome back, {{ Auth::user()->name }}. Here is a summary of your activities today.</p>
     </div>
 
+    <!-- Live Exchange Rate Ticker -->
+    <div class="mb-8 bg-gray-800 rounded-xl shadow-lg p-2 overflow-hidden">
+        <iframe src="https://www.exchangerates.org.uk/widget/ER-LRTICKER.php?w=1200&s=1&mc=NGN&mbg=1F2937&bs=no&bc=1F2937&f=verdana&fs=12px&fc=FFFFFF&lc=FFFFFF&lhc=FE9A00&vc=FFFFFF&vcu=10B981&vcd=EF4444&" width="100%" height="30" frameborder="0" scrolling="no" marginwidth="0" marginheight="0"></iframe>
+    </div>
+
     @if(!$hasOpeningBalance)
         <div class="mb-8 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md" role="alert">
             <div class="flex">
@@ -108,40 +113,41 @@
             </div>
         </div>
     </div>
-   <!-- Quick Links -->
-   <div class="mb-8">
-    <h2 class="text-xl font-semibold text-gray-800 mb-4">Quick Links</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <a href="{{ route('cashier.transactions.create') }}" class="group block p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-                    <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h.01M12 7h.01M16 7h.01M9 17h6M12 21a9 9 0 01-9-9 9 9 0 019-9 9 9 0 019 9 9 9 0 01-9 9z" />
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <h3 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">New Transaction</h3>
-                    <p class="text-sm text-gray-500">Record a new sale or purchase</p>
-                </div>
-            </div>
-        </a>
-        <a href="{{ route('cashier.cash-deposits.index') }}" class="group block p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
-                    <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <h3 class="text-lg font-semibold text-gray-900 group-hover:text-green-600 transition-colors">Cash Deposit</h3>
-                    <p class="text-sm text-gray-500">Record a new cash deposit</p>
-                </div>
-            </div>
-        </a>
-    </div>
-</div>
 
-<!-- Today's Transactions Table -->
+    <!-- Quick Links -->
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Quick Links</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a href="{{ route('cashier.transactions.create') }}" class="group block p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                        <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h.01M12 7h.01M16 7h.01M9 17h6M12 21a9 9 0 01-9-9 9 9 0 019-9 9 9 0 019 9 9 9 0 01-9 9z" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">New Transaction</h3>
+                        <p class="text-sm text-gray-500">Record a new sale or purchase</p>
+                    </div>
+                </div>
+            </a>
+            <a href="{{ route('cashier.cash-deposits.index') }}" class="group block p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
+                        <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-green-600 transition-colors">Cash Deposit</h3>
+                        <p class="text-sm text-gray-500">Record a new cash deposit</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+   <!-- Today's Transactions Table -->
 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
     <div class="p-6 border-b border-gray-200">
         <h3 class="text-lg font-semibold text-gray-800">Today's Transactions</h3>
